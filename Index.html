@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laboratorio#4</title>
+    <style>
+        body {
+            background-color: rgb(125, 222, 247);
+            font-family: Arial, sans-serif;
+        }
+
+        .cuadro {
+            background-color: white;
+            padding: 20px;
+            border: 3px solid black;
+            border-radius: 10px;
+            max-width: 400px;
+            margin: 50px auto;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        input {
+            width: 95%;
+            padding: 10px;
+            margin-top: 10px;
+            margin-bottom: 20px;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        p {
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        /* Definimos las clases para los colores */
+        .color-black {
+            color: black;
+        }
+
+        .color-red {
+            color: red;
+        }
+
+        .color-blue {
+            color: blue;
+        }
+
+        .color-green {
+            color: green;
+        }
+
+        .color-purple {
+            color: purple;
+        }
+    </style>
+    
+</head>
+<body>
+
+    <div class="cuadro">
+        <h2>Introduzca una Palabra</h2>
+
+        <form id="formTexto">
+            <input type="text" id="inputTexto" placeholder="Escribe aquí...">
+            <label for="inputTexto"></label>
+        </form>
+
+        <p>El Texto invertido es: <span id="textoInvertido" class="color-black"></span></p>
+
+        <!-- Select para elegir el color del texto de la respuesta -->
+        <label for="colorSelect">Elija el color del texto invertido:</label>
+        <select id="colorSelect">
+            <option value="black">Negro</option>
+            <option value="red">Rojo</option>
+            <option value="blue">Azul</option>
+            <option value="green">Verde</option>
+            <option value="purple">Morado</option>
+        </select>
+    </div>
+
+    <script>
+        const app = {
+
+            invertirText: function(texto) {
+                return texto.split('').reverse().join('');
+            },
+
+            ValorInput: function() {
+                return document.getElementById('inputTexto').value;
+            },
+
+            mostrarTextoInvertido: function(texto) {
+                document.getElementById('textoInvertido').textContent = texto;
+            },
+
+            cambiarColorFuente: function(color) {
+                const elementoTexto = document.getElementById('textoInvertido');
+
+                elementoTexto.classList.remove('color-black', 'color-red', 'color-blue', 'color-green', 'color-purple');
+                
+                elementoTexto.classList.add(`color-${color}`);
+            },
+
+            manejarEventoInput: function() {
+                const texto = this.ValorInput();
+                const textoInvertido = this.invertirText(texto);
+                this.mostrarTextoInvertido(textoInvertido);
+            },
+
+            manejarCambioColor: function() {
+                const colorSeleccionado = document.getElementById('colorSelect').value;
+                this.cambiarColorFuente(colorSeleccionado);
+            },
+
+            init: function() {
+                document.getElementById('inputTexto').addEventListener('input', () => {
+                    this.manejarEventoInput();
+                });
+
+                document.getElementById('colorSelect').addEventListener('change', () => {
+                    this.manejarCambioColor();
+                });
+            }
+        };
+
+        app.init();
+    </script>
+
+</body>
+</html>
